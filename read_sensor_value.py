@@ -22,14 +22,23 @@ def init():
 
 def sendtoinfluxdb(bucket, org, token, url, sensorvalues):
 
-    logging.debug(f"sendtoinfluxdb({bucket}, {org}, {token}, {url}, {sensorvalues})")
+    logging.debug(f"sendtoinfluxdb({bucket}, "
+                  f"{org}, "
+                  f"token_value_not_written_to_log, "
+                  f"{url}, "
+                  f"{sensorvalues})")
 
     client = influxdb_client.InfluxDBClient(
         url=url,
         token=token,
         org=org
     )
+
     write_api = client.write_api(write_options=SYNCHRONOUS)
+
+    logging.info(f"write_api.write({bucket}, ..., "
+                  f"temperature: {sensorvalues[0]}"
+                  f"humidity: {sensorvalues[1]}")
 
     client_response = write_api.write(bucket, org, [{"measurement" : "dhtdevice",
                                    "tags": {"location" : "vardagsrum"},
@@ -38,6 +47,8 @@ def sendtoinfluxdb(bucket, org, token, url, sensorvalues):
 
     if client_response is not None:
         raise Exception(f"client_response: {client_response}")
+    else:
+        logging.debug(f"client_response is: {client_response} as it should")
 
 def main():
     logging.basicConfig(filename=f"read_sensor_value-{datetime.date.today()}.log", filemode="w", level=logging.DEBUG,
