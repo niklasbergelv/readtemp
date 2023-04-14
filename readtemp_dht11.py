@@ -6,7 +6,7 @@ import random
 import logging
 import time
 
-MAX_NUMBER_OF_FAILED_READINGS = 100
+MAX_NUMBER_OF_FAILED_READINGS = 10
 SLEEP_BETWEEN_READINGS = 2
 
 def getrandomvalue(min, max):
@@ -30,6 +30,8 @@ def readvalues(number_of_readings=1):
                 logging.debug(f"read values, temperature:{temp}, humidity:{hum}")
                 if (temp is not None) and (hum is not None):
                     readings.append((temp, hum))
+                    logging.debug(f"readings-append, temp: {temp}, hum: {hum}")
+                    logging.debug(f"number of readings: {len(readings)}")
                     failed_readings = 0
                     if len(readings) == number_of_readings:
                         logging.debug(f"Number of succesful readings: {len(readings)}, time to break")
