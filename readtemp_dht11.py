@@ -23,8 +23,10 @@ def readvalues(number_of_readings=1):
         readings = []
         while True:
             try:
-                temp = getrandomvalue(15, 24)  # dhtDevice.temperature
-                hum = getrandomvalue(29,33)  # dhtDevice.humidity
+                # temp = getrandomvalue(15, 24)  # dhtDevice.temperature
+                temp = dhtDevice.temperature
+                # hum = getrandomvalue(29,33)  # dhtDevice.humidity
+                hum = dhtDevice.humidity
                 logging.debug(f"read values, temperature:{temp}, humidity:{hum}")
                 if (temp is not None) and (hum is not None):
                     readings.append((temp, hum))
