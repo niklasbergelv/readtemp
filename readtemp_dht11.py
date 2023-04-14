@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-# import board
-# import adafruit_dht
+import board
+import adafruit_dht
 import random
 import logging
 import time
@@ -18,7 +18,7 @@ def readvalues(number_of_readings=1):
     avg_temp = None
     avg_hum = None
     try:
-        # dhtDevice = adafruit_dht.DHT11(board.D18)
+        dhtDevice = adafruit_dht.DHT11(board.D18)
         failed_readings = 0
         readings = []
         while True:
@@ -46,6 +46,10 @@ def readvalues(number_of_readings=1):
                 time.sleep(SLEEP_BETWEEN_READINGS)
                 continue
 
+            except Exception as error:
+                dhtDevice.exit()
+                raise error
+
         xtotal = 0
         ytotal = 0
         for x, y in readings:
@@ -59,6 +63,8 @@ def readvalues(number_of_readings=1):
         logging.error("An exception occurred")
 
     logging.info(f"average readings returned, temperature:{avg_temp}, humidity:{avg_hum}")
+
+
 
     return avg_temp, avg_hum
 
