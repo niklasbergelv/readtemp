@@ -54,6 +54,8 @@ def readvalues(number_of_readings=1):
                 dhtDevice.exit()
                 raise error
 
+        dhtDevice.exit()
+
         xtotal = 0
         ytotal = 0
         for x, y in readings:
