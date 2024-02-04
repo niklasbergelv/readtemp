@@ -11,9 +11,6 @@ bus = smbus2.SMBus(1)
 # Load calibration parameters
 calibration_params = bme280.load_calibration_params(bus, address)
 
-def celsius_to_fahrenheit(celsius):
-    return (celsius * 9/5) + 32
-
 while True:
     try:
         # Read sensor data
@@ -24,13 +21,10 @@ while True:
         pressure = data.pressure
         humidity = data.humidity
 
-        # Convert temperature to Fahrenheit
-        temperature_fahrenheit = celsius_to_fahrenheit(temperature_celsius)
-
         # Print the readings
-        print("Temperature: {:.2f} °C, {:.2f} °F".format(temperature_celsius, temperature_fahrenheit))
-        print("Pressure: {:.2f} hPa".format(pressure))
-        print("Humidity: {:.2f} %".format(humidity))
+        print(f"Temperature: {temperature_celsius}")
+        print(f"Pressure: {pressure} hPa")
+        print(f"Humidity: {humidity} %")
 
         # Wait for a few seconds before the next reading
         time.sleep(2)
